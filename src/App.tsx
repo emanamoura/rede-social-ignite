@@ -9,8 +9,8 @@ const posts = [
     id: 1,
     author: {
       avatarUrl: "https://github.com/emanamoura.png",
-      name: "Diego Fernandes",
-      role: "CTO @Rocketseat",
+      name: "Emanuel Moura",
+      role: "Developer @CodeX",
     },
     content: [
       { type: "paragraph", content: "Fala galera 👋" },
@@ -44,7 +44,7 @@ const posts = [
 ];
 
 export function App() {
-  <div className={styles.wrapper}>
+  return (<div className={styles.wrapper}>
     <Sidebar />
     <main>
       {posts.map((post) => {
@@ -57,6 +57,6 @@ export function App() {
         );
       })}
     </main>
-  </div>;
+  </div>);
 }
 export default App;
