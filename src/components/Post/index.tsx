@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Avatar } from '../Avatar';
 import { Comment } from '../Comment';
 
-import styles from './Post.module.css';
+import styles from './style.module.css';
 
 interface PostProps {
     author: {
