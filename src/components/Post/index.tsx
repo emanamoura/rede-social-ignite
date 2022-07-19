@@ -1,3 +1,7 @@
+
+
+
+
 import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import { useState } from 'react';
@@ -5,27 +9,29 @@ import { useState } from 'react';
 import { Avatar } from '../Avatar';
 import { Comment } from '../Comment';
 
-import styles from './style.module.css';
+import styles from './Post.module.css';
+
 
 interface PostProps {
-    author: {
-        avatarUrl: string;
-        name: string;
-        role: string;
-    },
-    content: 
-        {
-            type: string;
-            content: string;
-        }[],
-    publishedAt: Date;
+  author: {
+      avatarUrl: string;
+      name: string;
+      role: string;
+  },
+  content: 
+      {
+          type: string;
+          content: string;
+      }[],
+  publishedAt: Date;
 }
 
 export function Post({ author, publishedAt, content } : PostProps) {
   const [comments, setComments] = useState([
-    1,
-    2,
+    'Post muito bacana, hein?!'
   ]);
+
+  const [newCommentText, setNewCommentText] = useState('');
 
   const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
     locale: ptBR,
@@ -37,8 +43,14 @@ export function Post({ author, publishedAt, content } : PostProps) {
   });
 
   function handleCrateNewComment() {
+    event.preventDefault()
 
-    setComments([...comments, comments.length + 1]);
+    setComments([...comments, newCommentText]);
+    setNewCommentText('');
+  }
+
+  function handleNewCommentChange() {
+    setNewCommentText(event.target.value);
   }
 
   return (
@@ -60,9 +72,9 @@ export function Post({ author, publishedAt, content } : PostProps) {
       <div className={styles.content}>
         {content.map(line => {
           if (line.type === 'paragraph') {
-            return <p>{line.content}</p>;
+            return <p key={line.content}>{line.content}</p>;
           } else if (line.type === 'link') {
-            return <p><a href="#">{line.content}</a></p>
+            return <p key={line.content}><a href="#">{line.content}</a></p>
           }
         })}
       </div>
@@ -71,7 +83,10 @@ export function Post({ author, publishedAt, content } : PostProps) {
         <strong>Deixe seu feedback</strong>
 
         <textarea
+          name="comment"
           placeholder="Deixe um comentário"
+          value={newCommentText}
+          onChange={handleNewCommentChange}
         />
 
         <footer>
@@ -81,7 +96,7 @@ export function Post({ author, publishedAt, content } : PostProps) {
 
       <div className={styles.commentList}>
         {comments.map(comment => {
-          return <Comment />
+          return <Comment key={comment} content={comment} />
         })}
       </div>
     </article>
