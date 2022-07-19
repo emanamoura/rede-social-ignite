@@ -38,8 +38,12 @@ export function Post({ author, publishedAt, content }: PostProps) {
     addSuffix: true,
   });
 
-  function deleteComment(comment: string) {
-    console.log(`Deletar comentário ${comment}`);
+  function deleteComment(commentToDelete: string) {
+    const commentsWithoutDeletedOne = comments.filter(comment => {
+      return comment !== commentToDelete;
+    })
+
+    setComments(commentsWithoutDeletedOne);
   }
 
   function handleCrateNewComment() {
