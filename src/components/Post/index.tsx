@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Avatar } from "../Avatar";
 import { Comment } from "../Comment";
 
-import styles from "./Post.module.css";
+import styles from "./style.module.css";
 
 interface PostProps {
   author: {
@@ -54,9 +54,15 @@ export function Post({ author, publishedAt, content }: PostProps) {
   }
 
   function handleNewCommentChange() {
+    event.target.setCustomValidity('');
     setNewCommentText(event.target.value);
   }
 
+  function handleNewCommentInvalid() {
+    event.target.setCustomValidity('Esse campo é obrigatório!');
+  }
+
+  const isNewCommentEmpty = newCommentText.length === 0;
   return (
     <article className={styles.post}>
       <header>
@@ -101,7 +107,7 @@ export function Post({ author, publishedAt, content }: PostProps) {
         />
 
         <footer>
-          <button type="submit">Publicar</button>
+        <button type="submit" disabled={isNewCommentEmpty}>Publicar</button>
         </footer>
       </form>
 
